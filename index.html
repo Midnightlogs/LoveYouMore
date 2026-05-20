@@ -10,441 +10,304 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --rose:#e8627a;--rose-light:#fdf0f2;--rose-mid:#f9d0d8;--rose-dark:#8a2236;
-  --blush:#fce8ec;--sage:#e8f0e9;--sage-dark:#3d5c41;--cream:#fdf9f5;
+  --sage:#e8f0e9;--sage-dark:#3d5c41;--cream:#fdf9f5;
   --ink:#1a1014;--ink-soft:#4a3540;--ink-muted:#7a6070;
-  --gold:#c9935a;--shadow:rgba(139,60,84,0.1);
+  --shadow:rgba(139,60,84,0.10);
 }
-html{scroll-behavior:smooth}
-body{
-  font-family:'Lora',serif;
-  background:var(--cream);
-  color:var(--ink);
-  min-height:100vh;
-  overflow-x:hidden;
-}
+html,body{width:100%;min-height:100vh;overflow-x:hidden}
+body{font-family:'Lora',serif;background:var(--cream);color:var(--ink)}
 
 /* PETALS */
-.petal{
-  position:fixed;border-radius:50% 0 50% 0;
-  pointer-events:none;z-index:0;
-  animation:floatPetal linear infinite;
-  opacity:0;
-}
-@keyframes floatPetal{
-  0%{transform:translateY(-60px) rotate(0deg);opacity:0}
-  8%{opacity:0.16}
-  92%{opacity:0.1}
-  100%{transform:translateY(105vh) rotate(400deg);opacity:0}
-}
+.petal{position:fixed;border-radius:50% 0 50% 0;pointer-events:none;z-index:0;opacity:0;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(-60px) rotate(0deg);opacity:0}8%{opacity:0.14}92%{opacity:0.08}100%{transform:translateY(105vh) rotate(400deg);opacity:0}}
 
-/* HERO */
+/* HERO — full bleed */
 .hero{
   position:relative;z-index:1;
-  text-align:center;
-  padding:5rem 2rem 3rem;
-  max-width:700px;
-  margin:0 auto;
+  width:100%;
+  background:linear-gradient(160deg,#fff5f7 0%,var(--cream) 60%);
+  border-bottom:1px solid var(--rose-mid);
+  padding:5vw 6vw 4vw;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:2rem;
+  min-height:38vh;
 }
-.hero-eyebrow{
-  font-family:'DM Mono',monospace;
-  font-size:11px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--rose);margin-bottom:1.2rem;opacity:0.9;
-}
-.hero-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.8rem,6vw,4.5rem);
-  font-weight:700;line-height:1.12;
-  color:var(--ink);margin-bottom:1rem;
-}
+.hero-left{}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--rose);margin-bottom:1rem;opacity:.85}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5.5rem);font-weight:700;line-height:1.08;color:var(--ink);margin-bottom:1rem}
 .hero-title em{font-style:italic;color:var(--rose)}
-.hero-sub{
-  font-family:'Lora',serif;font-style:italic;
-  font-size:1.1rem;color:var(--ink-muted);
-  line-height:1.7;margin-bottom:2rem;
-}
-.hero-branch{
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:'DM Mono',monospace;font-size:12px;
-  color:var(--sage-dark);background:var(--sage);
-  padding:5px 16px;border-radius:20px;
-  border:1px solid #c5ddc8;
-}
+.hero-sub{font-family:'Lora',serif;font-style:italic;font-size:clamp(1rem,1.4vw,1.2rem);color:var(--ink-muted);line-height:1.8;margin-bottom:1.5rem}
+.hero-branch{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:12px;color:var(--sage-dark);background:var(--sage);padding:6px 18px;border-radius:20px;border:1px solid #c5ddc8}
 
-/* STATS */
-.stats{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:12px;max-width:600px;margin:3rem auto;
-  padding:0 1.5rem;position:relative;z-index:1;
-}
-.stat-card{
-  background:white;border:1px solid var(--rose-mid);
-  border-radius:18px;padding:1.4rem 1rem;
-  text-align:center;
-  box-shadow:0 2px 16px var(--shadow);
-  transition:transform 0.2s;
-}
-.stat-card:hover{transform:translateY(-3px)}
-.stat-num{
-  font-family:'Playfair Display',serif;
-  font-size:2.4rem;font-weight:700;color:var(--rose);line-height:1;
-}
-.stat-label{
-  font-family:'DM Mono',monospace;
-  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--ink-muted);margin-top:5px;
-}
+/* hero right — big decorative number */
+.hero-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:1rem}
+.hero-big{font-family:'Playfair Display',serif;font-size:clamp(5rem,12vw,13rem);font-weight:700;line-height:1;color:var(--rose-mid);letter-spacing:-4px;user-select:none}
+.hero-big span{color:var(--rose)}
+.hero-caption{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted)}
 
-/* GRAPH */
-.graph-wrap{
-  max-width:700px;margin:1rem auto 3rem;padding:0 1.5rem;
-  position:relative;z-index:1;
+/* MAIN LAYOUT — sidebar + content */
+.layout{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 38vh);position:relative;z-index:1}
+
+/* SIDEBAR */
+.sidebar{
+  background:white;
+  border-right:1px solid var(--rose-mid);
+  padding:2rem 1.5rem;
+  display:flex;flex-direction:column;gap:1.5rem;
+  position:sticky;top:0;height:calc(100vh - 38vh);overflow-y:auto;
 }
-.graph-box{
-  background:white;border:1px solid var(--rose-mid);
-  border-radius:20px;padding:1.5rem;
-  box-shadow:0 2px 16px var(--shadow);
-}
-.graph-label{
-  font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--ink-muted);margin-bottom:1rem;
-}
-.graph-grid{display:flex;flex-wrap:wrap;gap:5px}
-.gcell{
-  width:20px;height:20px;border-radius:5px;
-  background:var(--rose-light);border:1px solid var(--rose-mid);
-  transition:transform 0.15s;cursor:default;
-  position:relative;
-}
-.gcell:hover{transform:scale(1.3);z-index:2}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--rose-mid);border-radius:4px}
+
+.s-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.6rem}
+
+/* stat cards in sidebar */
+.stat-group{display:flex;flex-direction:column;gap:8px}
+.stat-card{background:var(--rose-light);border:1px solid var(--rose-mid);border-radius:14px;padding:1rem 1.2rem;display:flex;align-items:center;justify-content:space-between}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--rose);line-height:1}
+.stat-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-muted);text-align:right}
+
+/* graph in sidebar */
+.graph-grid{display:flex;flex-wrap:wrap;gap:4px}
+.gcell{width:16px;height:16px;border-radius:4px;background:var(--rose-light);border:1px solid var(--rose-mid);cursor:default;transition:transform .15s;flex-shrink:0}
+.gcell:hover{transform:scale(1.4);z-index:2;position:relative}
 .gcell.has{background:var(--rose-mid);border-color:var(--rose)}
 .gcell.today{background:var(--rose);border-color:var(--rose-dark)}
-.graph-legend{
-  display:flex;align-items:center;gap:6px;margin-top:10px;
-  font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);
-}
-.gcell-sm{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+.graph-legend{display:flex;align-items:center;gap:5px;margin-top:8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted)}
+.gcell-sm{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+/* filters in sidebar */
+.filter-list{display:flex;flex-direction:column;gap:6px}
+.pill{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.5px;padding:7px 14px;border-radius:10px;border:1px solid var(--rose-mid);background:transparent;color:var(--ink-muted);cursor:pointer;transition:all .2s;text-align:left;width:100%}
+.pill:hover,.pill.on{background:var(--rose);color:white;border-color:var(--rose)}
+
+/* MAIN CONTENT */
+.main{padding:2.5rem 3rem;display:flex;flex-direction:column;gap:2.5rem}
 
 /* COMPOSER */
-.section{
-  max-width:700px;margin:0 auto 3rem;padding:0 1.5rem;
-  position:relative;z-index:1;
-}
-.section-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.6rem;font-weight:700;
-  color:var(--ink);margin-bottom:1.2rem;
-}
-.section-title em{font-style:italic;color:var(--rose)}
-
-.composer{
-  background:white;border-radius:20px;
-  border:1px solid var(--rose-mid);
-  box-shadow:0 4px 30px var(--shadow);
-  overflow:hidden;
-}
-.composer-bar{
-  display:flex;align-items:center;gap:8px;
-  padding:0.9rem 1.4rem;
-  background:linear-gradient(to right,var(--rose-light),white);
-  border-bottom:1px solid var(--rose-light);
-}
+.composer{background:white;border-radius:20px;border:1px solid var(--rose-mid);box-shadow:0 4px 30px var(--shadow);overflow:hidden}
+.cbar{display:flex;align-items:center;gap:8px;padding:1rem 1.4rem;background:linear-gradient(to right,var(--rose-light),white);border-bottom:1px solid var(--rose-light)}
 .dot{width:11px;height:11px;border-radius:50%}
-.bar-title{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-muted);flex:1}
-.bar-date{
-  font-family:'DM Mono',monospace;font-size:11px;
-  color:var(--rose-dark);background:var(--rose-light);
-  padding:3px 11px;border-radius:10px;border:1px solid var(--rose-mid);
-}
-.composer-body{padding:1.4rem}
-.prefix-row{
-  display:flex;align-items:center;
-  border:1px solid var(--rose-mid);border-radius:12px;
-  overflow:hidden;margin-bottom:1rem;
-}
-.prefix{
-  font-family:'DM Mono',monospace;font-size:13px;
-  color:var(--rose-dark);padding:11px 14px;
-  background:var(--rose-light);border-right:1px solid var(--rose-mid);
-  white-space:nowrap;
-}
-.msg-input{
-  flex:1;font-family:'Lora',serif;font-size:15px;
-  color:var(--ink);background:white;
-  border:none;padding:11px 14px;outline:none;
-}
+.cbar-title{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-muted);flex:1}
+.cbar-date{font-family:'DM Mono',monospace;font-size:11px;color:var(--rose-dark);background:var(--rose-light);padding:3px 12px;border-radius:10px;border:1px solid var(--rose-mid)}
+.cbody{padding:1.5rem}
+.prefix-row{display:flex;align-items:center;border:1px solid var(--rose-mid);border-radius:12px;overflow:hidden;margin-bottom:1rem}
+.prefix{font-family:'DM Mono',monospace;font-size:13px;color:var(--rose-dark);padding:12px 16px;background:var(--rose-light);border-right:1px solid var(--rose-mid);white-space:nowrap}
+.msg-input{flex:1;font-family:'Lora',serif;font-size:16px;color:var(--ink);background:white;border:none;padding:12px 16px;outline:none}
 .msg-input::placeholder{color:var(--ink-muted);font-style:italic}
 .moods{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
-.mood{
-  font-size:20px;padding:6px 10px;border-radius:10px;
-  border:1.5px solid transparent;background:var(--rose-light);
-  cursor:pointer;transition:all 0.2s;line-height:1;
-}
-.mood:hover{transform:scale(1.18);background:var(--rose-mid)}
+.mood{font-size:22px;padding:7px 11px;border-radius:10px;border:1.5px solid transparent;background:var(--rose-light);cursor:pointer;transition:all .2s;line-height:1}
+.mood:hover{transform:scale(1.2);background:var(--rose-mid)}
 .mood.on{border-color:var(--rose);background:var(--rose-mid);transform:scale(1.1)}
-.note-area{
-  width:100%;font-family:'Lora',serif;font-style:italic;
-  font-size:15px;color:var(--ink);background:var(--cream);
-  border:1px solid var(--rose-mid);border-radius:12px;
-  padding:14px;resize:vertical;min-height:100px;
-  outline:none;line-height:1.8;transition:border-color 0.2s;
-}
+.note-area{width:100%;font-family:'Lora',serif;font-style:italic;font-size:15px;color:var(--ink);background:var(--cream);border:1px solid var(--rose-mid);border-radius:12px;padding:14px 16px;resize:vertical;min-height:110px;outline:none;line-height:1.8;transition:border-color .2s}
 .note-area::placeholder{color:var(--ink-muted)}
 .note-area:focus{border-color:var(--rose)}
-.composer-foot{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0.9rem 1.4rem;border-top:1px solid var(--rose-light);
-  background:var(--rose-light);flex-wrap:wrap;gap:10px;
-}
+.cfoot{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.4rem;border-top:1px solid var(--rose-light);background:var(--rose-light);flex-wrap:wrap;gap:10px}
 .chars{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-muted)}
-.btn-commit{
-  display:flex;align-items:center;gap:8px;
-  background:var(--rose);color:white;border:none;
-  border-radius:12px;padding:10px 22px;
-  font-family:'DM Mono',monospace;font-size:13px;
-  cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;
-}
-.btn-commit:hover{background:var(--rose-dark);transform:translateY(-1px);box-shadow:0 4px 16px var(--shadow)}
+.btn-commit{display:flex;align-items:center;gap:8px;background:var(--rose);color:white;border:none;border-radius:12px;padding:11px 26px;font-family:'DM Mono',monospace;font-size:13px;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.btn-commit:hover{background:var(--rose-dark);transform:translateY(-1px);box-shadow:0 4px 18px var(--shadow)}
 .btn-commit:active{transform:translateY(0)}
 
-/* FILTER */
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.2rem}
-.pill{
-  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;
-  padding:5px 16px;border-radius:20px;
-  border:1px solid var(--rose-mid);background:white;
-  color:var(--ink-muted);cursor:pointer;transition:all 0.2s;
-}
-.pill:hover,.pill.on{background:var(--rose);color:white;border-color:var(--rose)}
+/* HISTORY HEADER */
+.hist-head{display:flex;align-items:baseline;gap:12px}
+.hist-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--ink)}
+.hist-title em{font-style:italic;color:var(--rose)}
+.hist-count{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-muted)}
 
 /* COMMIT CARDS */
 .commits{display:flex;flex-direction:column;gap:12px}
-.ccard{
-  background:white;border:1px solid var(--rose-mid);
-  border-radius:16px;padding:1.3rem 1.4rem 1.3rem 1.7rem;
-  box-shadow:0 2px 12px var(--shadow);
-  transition:all 0.25s;position:relative;overflow:hidden;
-}
-.ccard::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:3px;background:var(--rose);border-radius:3px 0 0 3px;
-}
-.ccard:hover{transform:translateX(4px);box-shadow:0 4px 22px var(--shadow)}
-.ctop{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px}
-.cmood{font-size:24px;line-height:1;flex-shrink:0;margin-top:2px}
+.ccard{background:white;border:1px solid var(--rose-mid);border-radius:16px;padding:1.4rem 1.6rem 1.4rem 1.9rem;box-shadow:0 2px 12px var(--shadow);transition:all .25s;position:relative;overflow:hidden}
+.ccard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--rose);border-radius:3px 0 0 3px}
+.ccard:hover{transform:translateX(5px);box-shadow:0 4px 24px var(--shadow)}
+.ctop{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.cmood{font-size:26px;line-height:1;flex-shrink:0;margin-top:2px}
 .cmain{flex:1}
-.chash{
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:var(--rose);margin-bottom:3px;letter-spacing:0.5px;
-}
-.csubject{
-  font-family:'Playfair Display',serif;
-  font-size:1.1rem;color:var(--ink);line-height:1.3;
-}
-.cnote{
-  font-family:'Lora',serif;font-style:italic;
-  font-size:0.9rem;color:var(--ink-soft);
-  margin-top:6px;line-height:1.7;
-}
-.cmeta{
-  display:flex;align-items:center;gap:10px;
-  margin-top:10px;flex-wrap:wrap;
-}
-.ctime{
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:var(--ink-muted);letter-spacing:0.5px;
-}
-.ctag{
-  font-family:'DM Mono',monospace;font-size:10px;
-  padding:2px 10px;border-radius:8px;
-  background:var(--rose-light);color:var(--rose-dark);
-  border:1px solid var(--rose-mid);
-}
-.cdel{
-  margin-left:auto;background:none;border:none;
-  cursor:pointer;color:var(--ink-muted);font-size:16px;
-  padding:4px 6px;border-radius:8px;
-  transition:all 0.2s;opacity:0;
-}
+.chash{font-family:'DM Mono',monospace;font-size:10px;color:var(--rose);margin-bottom:4px;letter-spacing:.5px}
+.csubject{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--ink);line-height:1.3}
+.cnote{font-family:'Lora',serif;font-style:italic;font-size:.92rem;color:var(--ink-soft);margin-top:7px;line-height:1.75}
+.cmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ctime{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);letter-spacing:.5px}
+.ctag{font-family:'DM Mono',monospace;font-size:10px;padding:2px 10px;border-radius:8px;background:var(--rose-light);color:var(--rose-dark);border:1px solid var(--rose-mid)}
+.cdel{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-muted);font-size:15px;padding:5px 7px;border-radius:8px;transition:all .2s;opacity:0}
 .ccard:hover .cdel{opacity:1}
 .cdel:hover{background:var(--rose-light);color:var(--rose)}
 
 /* EMPTY */
-.empty{
-  text-align:center;padding:4rem 2rem;color:var(--ink-muted);
-}
-.empty-icon{font-size:3rem;margin-bottom:1rem;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.empty-text{
-  font-family:'Playfair Display',serif;font-style:italic;
-  font-size:1.1rem;margin-bottom:0.5rem;color:var(--ink-muted);
-}
-.empty-sub{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;opacity:0.5}
+.empty{text-align:center;padding:5rem 2rem;color:var(--ink-muted)}
+.empty-icon{font-size:3.5rem;margin-bottom:1rem;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.empty-text{font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;margin-bottom:.5rem}
+.empty-sub{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;opacity:.5}
+
+/* EXPORT */
+.btn-export{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:white;border:none;border-radius:12px;padding:11px 24px;font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;transition:all .2s}
+.btn-export:hover{background:var(--rose-dark);transform:translateY(-1px)}
 
 /* TOAST */
-.toast{
-  position:fixed;bottom:2rem;right:2rem;
-  background:var(--sage-dark);color:white;
-  font-family:'DM Mono',monospace;font-size:13px;
-  padding:12px 22px;border-radius:14px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.15);
-  transform:translateY(80px);opacity:0;
-  transition:all 0.35s cubic-bezier(.22,1,.36,1);
-  z-index:999;
-}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--sage-dark);color:white;font-family:'DM Mono',monospace;font-size:13px;padding:13px 24px;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.15);transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.22,1,.36,1);z-index:999}
 .toast.show{transform:translateY(0);opacity:1}
 
 /* FOOTER */
-.footer{
-  text-align:center;padding:3rem 1.5rem 4rem;
-  position:relative;z-index:1;
-}
-.footer-heart{font-size:1.6rem;margin-bottom:0.8rem;animation:pulse 2.5s ease-in-out infinite}
-.footer-text{
-  font-family:'Lora',serif;font-style:italic;
-  font-size:0.95rem;color:var(--ink-muted);line-height:1.8;
-}
-.footer-mono{
-  font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:2px;color:var(--ink-muted);
-  opacity:0.5;margin-top:0.8rem;text-transform:uppercase;
-}
-
-/* EXPORT BTN */
-.btn-export{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--ink);color:white;border:none;
-  border-radius:12px;padding:10px 22px;
-  font-family:'DM Mono',monospace;font-size:12px;
-  cursor:pointer;transition:all 0.2s;margin-top:0.5rem;
-}
-.btn-export:hover{background:var(--rose-dark);transform:translateY(-1px)}
+.footer{border-top:1px solid var(--rose-mid);background:white;padding:3rem 6vw;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;position:relative;z-index:1}
+.footer-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.3rem;color:var(--ink);line-height:1.7}
+.footer-quote span{color:var(--rose)}
+.footer-right{text-align:right}
+.footer-mono{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-muted);letter-spacing:1.5px;text-transform:uppercase;line-height:2}
 
 /* DIVIDER */
-.divider{
-  max-width:700px;margin:0 auto 2rem;padding:0 1.5rem;
-  position:relative;z-index:1;
-  display:flex;align-items:center;gap:12px;
-}
-.divider::before,.divider::after{
-  content:'';flex:1;height:1px;background:var(--rose-mid);
-}
-.divider span{
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:var(--ink-muted);letter-spacing:2px;white-space:nowrap;
-}
+.divider{display:flex;align-items:center;gap:12px;margin-bottom:.5rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--rose-mid)}
+.divider span{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);letter-spacing:2px;white-space:nowrap}
 
-@media(max-width:600px){
-  .stats{grid-template-columns:repeat(3,1fr)}
-  .stat-num{font-size:1.8rem}
-  .hero-title{font-size:2.4rem}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding:2rem}
+  .hero-right{display:none}
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--rose-mid)}
+  .main{padding:1.5rem}
+  .footer{grid-template-columns:1fr}
+  .footer-right{text-align:left}
 }
 </style>
 </head>
 <body>
-
 <div id="petals"></div>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-eyebrow">git commit -m "love"</div>
-  <h1 class="hero-title">Daily <em>Love</em><br>Commits</h1>
-  <p class="hero-sub">Every day with you is worth committing to.<br>This is my repository of small, honest, daily love.</p>
-  <span class="hero-branch" id="branchName">⎇ main</span>
-</div>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat-card">
-    <div class="stat-num" id="totalCommits">0</div>
-    <div class="stat-label">Total Commits</div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">git commit -m "love"</div>
+    <h1 class="hero-title">Daily<br><em>Love</em><br>Commits</h1>
+    <p class="hero-sub">Every day with you is worth<br>committing to. This is my<br>repository of small, honest love.</p>
+    <span class="hero-branch" id="branchName">⎇ main</span>
   </div>
-  <div class="stat-card">
-    <div class="stat-num" id="streakCount">0</div>
-    <div class="stat-label">Day Streak 🔥</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-num" id="todayCount">0</div>
-    <div class="stat-label">Today</div>
+  <div class="hero-right">
+    <div class="hero-big"><span id="heroNum">0</span></div>
+    <div class="hero-caption">love commits pushed</div>
   </div>
 </div>
 
-<!-- GRAPH -->
-<div class="graph-wrap">
-  <div class="graph-box">
-    <div class="graph-label">contribution graph · 30 days of love</div>
-    <div class="graph-grid" id="graphGrid"></div>
-    <div class="graph-legend">
-      <span>less</span>
-      <div class="gcell-sm" style="background:var(--rose-light);border:1px solid var(--rose-mid)"></div>
-      <div class="gcell-sm" style="background:var(--rose-mid);border:1px solid var(--rose)"></div>
-      <div class="gcell-sm" style="background:var(--rose)"></div>
-      <span>more</span>
-    </div>
-  </div>
-</div>
+<!-- MAIN LAYOUT -->
+<div class="layout">
 
-<div class="divider"><span>write a new note</span></div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
 
-<!-- COMPOSER -->
-<div class="section">
-  <div class="composer">
-    <div class="composer-bar">
-      <div class="dot" style="background:#ff5f57"></div>
-      <div class="dot" style="background:#ffbd2e"></div>
-      <div class="dot" style="background:#28c840"></div>
-      <span class="bar-title">new commit — love-notes.md</span>
-      <span class="bar-date" id="todayDate"></span>
-    </div>
-    <div class="composer-body">
-      <div class="prefix-row">
-        <span class="prefix">💌 feat(heart):</span>
-        <input class="msg-input" id="commitMsg" placeholder="describe today's feeling..." maxlength="80">
+    <div>
+      <div class="s-label">stats</div>
+      <div class="stat-group">
+        <div class="stat-card">
+          <div>
+            <div class="stat-num" id="totalCommits">0</div>
+            <div class="stat-lbl">Total</div>
+          </div>
+          <div style="font-size:1.8rem">💌</div>
+        </div>
+        <div class="stat-card">
+          <div>
+            <div class="stat-num" id="streakCount">0</div>
+            <div class="stat-lbl">Streak</div>
+          </div>
+          <div style="font-size:1.8rem">🔥</div>
+        </div>
+        <div class="stat-card">
+          <div>
+            <div class="stat-num" id="todayCount">0</div>
+            <div class="stat-lbl">Today</div>
+          </div>
+          <div style="font-size:1.8rem">🌸</div>
+        </div>
       </div>
-      <div class="moods" id="moodRow"></div>
-      <textarea class="note-area" id="noteBody" placeholder="Write your love note here... pour your heart out. 🌸" rows="4"></textarea>
     </div>
-    <div class="composer-foot">
-      <span class="chars"><span id="charLeft">80</span> chars remaining</span>
-      <button class="btn-commit" onclick="submitCommit()">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="3"/><path d="M1 8h4m6 0h4" stroke-linecap="round"/></svg>
-        commit love
-      </button>
+
+    <div>
+      <div class="s-label">30 days</div>
+      <div class="graph-grid" id="graphGrid"></div>
+      <div class="graph-legend">
+        <span>less</span>
+        <div class="gcell-sm" style="background:var(--rose-light);border:1px solid var(--rose-mid)"></div>
+        <div class="gcell-sm" style="background:var(--rose-mid);border:1px solid var(--rose)"></div>
+        <div class="gcell-sm" style="background:var(--rose)"></div>
+        <span>more</span>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="divider"><span>commit history</span></div>
+    <div>
+      <div class="s-label">filter by mood</div>
+      <div class="filter-list">
+        <button class="pill on" onclick="filter('all',this)">✦ All commits</button>
+        <button class="pill" onclick="filter('💖',this)">💖 Love</button>
+        <button class="pill" onclick="filter('🥺',this)">🥺 Miss you</button>
+        <button class="pill" onclick="filter('😊',this)">😊 Happy</button>
+        <button class="pill" onclick="filter('🌙',this)">🌙 Late night</button>
+        <button class="pill" onclick="filter('✨',this)">✨ Magical</button>
+        <button class="pill" onclick="filter('🌹',this)">🌹 Romantic</button>
+        <button class="pill" onclick="filter('🫶',this)">🫶 Grateful</button>
+      </div>
+    </div>
 
-<!-- TIMELINE -->
-<div class="section">
-  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:1.2rem">
-    <h2 class="section-title" style="margin:0">Commit <em>History</em></h2>
-    <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-muted)" id="histCount"></span>
-  </div>
-  <div class="filters">
-    <button class="pill on" onclick="filter('all',this)">All</button>
-    <button class="pill" onclick="filter('💖',this)">💖 Love</button>
-    <button class="pill" onclick="filter('🥺',this)">🥺 Miss you</button>
-    <button class="pill" onclick="filter('😊',this)">😊 Happy</button>
-    <button class="pill" onclick="filter('🌙',this)">🌙 Late night</button>
-    <button class="pill" onclick="filter('✨',this)">✨ Magical</button>
-  </div>
-  <div class="commits" id="commitList"></div>
+    <div style="margin-top:auto">
+      <button class="btn-export" style="width:100%;justify-content:center" onclick="exportNotes()">⬇ Export .md</button>
+    </div>
 
-  <div style="text-align:center;margin-top:2rem">
-    <button class="btn-export" onclick="exportNotes()">⬇ Export love-notes.md</button>
-  </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- COMPOSER -->
+    <div>
+      <div class="divider" style="margin-bottom:1rem"><span>write a new note</span></div>
+      <div class="composer">
+        <div class="cbar">
+          <div class="dot" style="background:#ff5f57"></div>
+          <div class="dot" style="background:#ffbd2e"></div>
+          <div class="dot" style="background:#28c840"></div>
+          <span class="cbar-title">new commit — love-notes.md</span>
+          <span class="cbar-date" id="todayDate"></span>
+        </div>
+        <div class="cbody">
+          <div class="prefix-row">
+            <span class="prefix">💌 feat(heart):</span>
+            <input class="msg-input" id="commitMsg" placeholder="describe today's feeling..." maxlength="80">
+          </div>
+          <div class="moods" id="moodRow"></div>
+          <textarea class="note-area" id="noteBody" placeholder="Write your love note here... pour your heart out. 🌸" rows="4"></textarea>
+        </div>
+        <div class="cfoot">
+          <span class="chars"><span id="charLeft">80</span> chars remaining</span>
+          <button class="btn-commit" onclick="submitCommit()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="3"/><path d="M1 8h4m6 0h4" stroke-linecap="round"/></svg>
+            commit love
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div>
+      <div class="divider" style="margin-bottom:1rem"><span>commit history</span></div>
+      <div class="hist-head" style="margin-bottom:1.2rem">
+        <h2 class="hist-title">Commit <em>History</em></h2>
+        <span class="hist-count" id="histCount"></span>
+      </div>
+      <div class="commits" id="commitList"></div>
+    </div>
+
+  </main>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-  <div class="footer-heart">🌸</div>
-  <p class="footer-text">
+  <div class="footer-quote">
     "i'm not great with words out loud.<br>
-    so here — i commit them instead."
-  </p>
-  <p class="footer-mono">made with love · pushed daily · for you, always</p>
+    so here — <span>i commit them instead.</span>"
+  </div>
+  <div class="footer-right">
+    <div class="footer-mono">made with love 🌸<br>pushed daily<br>for you, always</div>
+  </div>
 </div>
 
 <div class="toast" id="toast">✓ committed with love 💌</div>
@@ -456,12 +319,7 @@ let commits=JSON.parse(localStorage.getItem('loveCommits')||'[]');
 let mood='💖',curFilter='all';
 
 function init(){
-  makePetals();
-  renderMoods();
-  setDate();
-  renderGraph();
-  renderCommits();
-  updateStats();
+  makePetals();renderMoods();setDate();renderGraph();renderCommits();updateStats();
   document.getElementById('commitMsg').addEventListener('input',function(){
     document.getElementById('charLeft').textContent=80-this.value.length;
   });
@@ -470,11 +328,10 @@ function init(){
 function makePetals(){
   const bg=document.getElementById('petals');
   const cols=['#f9d0d8','#fce8ec','#ffe9d0','#f9c0cc','#ffe0e8'];
-  for(let i=0;i<16;i++){
-    const p=document.createElement('div');
-    p.className='petal';
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');p.className='petal';
     const s=10+Math.random()*22;
-    p.style.cssText=`width:${s}px;height:${s*1.5}px;left:${Math.random()*100}%;top:-60px;background:${cols[i%cols.length]};animation-duration:${9+Math.random()*14}s;animation-delay:${Math.random()*10}s;`;
+    p.style.cssText=`width:${s}px;height:${s*1.5}px;left:${Math.random()*100}%;top:-60px;background:${cols[i%5]};animation-duration:${9+Math.random()*14}s;animation-delay:${Math.random()*10}s;`;
     bg.appendChild(p);
   }
 }
@@ -484,12 +341,7 @@ function renderMoods(){
     `<button class="mood${m===mood?' on':''}" onclick="pickMood('${m}',this)">${m}</button>`
   ).join('');
 }
-
-function pickMood(m,el){
-  mood=m;
-  document.querySelectorAll('.mood').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-}
+function pickMood(m,el){mood=m;document.querySelectorAll('.mood').forEach(b=>b.classList.remove('on'));el.classList.add('on')}
 
 function setDate(){
   const d=new Date();
@@ -503,14 +355,13 @@ function submitCommit(){
   const msg=document.getElementById('commitMsg').value.trim();
   const note=document.getElementById('noteBody').value.trim();
   if(!msg){document.getElementById('commitMsg').focus();return}
-  const c={
+  commits.unshift({
     id:hash(),msg,note,mood,
     tag:TAGS[Math.floor(Math.random()*TAGS.length)],
     date:new Date().toISOString(),
     dateStr:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}),
     timeStr:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})
-  };
-  commits.unshift(c);
+  });
   save();renderCommits();renderGraph();updateStats();
   document.getElementById('commitMsg').value='';
   document.getElementById('noteBody').value='';
@@ -519,25 +370,9 @@ function submitCommit(){
 }
 
 function save(){localStorage.setItem('loveCommits',JSON.stringify(commits))}
-
-function showToast(){
-  const t=document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
-}
-
-function delCommit(id){
-  commits=commits.filter(c=>c.id!==id);
-  save();renderCommits();renderGraph();updateStats();
-}
-
-function filter(f,el){
-  curFilter=f;
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
-  el.classList.add('on');
-  renderCommits();
-}
-
+function showToast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+function delCommit(id){commits=commits.filter(c=>c.id!==id);save();renderCommits();renderGraph();updateStats()}
+function filter(f,el){curFilter=f;document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));el.classList.add('on');renderCommits()}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 function renderCommits(){
@@ -545,11 +380,7 @@ function renderCommits(){
   const shown=curFilter==='all'?commits:commits.filter(c=>c.mood===curFilter);
   document.getElementById('histCount').textContent=shown.length+' commit'+(shown.length!==1?'s':'');
   if(!shown.length){
-    list.innerHTML=`<div class="empty">
-      <div class="empty-icon">🌸</div>
-      <div class="empty-text">No commits yet — write your first love note.</div>
-      <div class="empty-sub">git status: waiting for your heart</div>
-    </div>`;
+    list.innerHTML=`<div class="empty"><div class="empty-icon">🌸</div><div class="empty-text">No commits yet — write your first love note.</div><div class="empty-sub">git status: waiting for your heart</div></div>`;
     return;
   }
   list.innerHTML=shown.map(c=>`
@@ -567,12 +398,12 @@ function renderCommits(){
         <span class="ctime">${c.dateStr} · ${c.timeStr}</span>
         <span class="ctag">${c.tag}</span>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function updateStats(){
   document.getElementById('totalCommits').textContent=commits.length;
+  document.getElementById('heroNum').textContent=commits.length;
   const today=new Date().toDateString();
   document.getElementById('todayCount').textContent=commits.filter(c=>new Date(c.date).toDateString()===today).length;
   document.getElementById('streakCount').textContent=calcStreak();
@@ -582,29 +413,18 @@ function calcStreak(){
   if(!commits.length)return 0;
   const days=[...new Set(commits.map(c=>new Date(c.date).toDateString()))];
   let s=0;const cur=new Date();
-  for(let i=0;i<90;i++){
-    const d=new Date(cur);d.setDate(d.getDate()-i);
-    if(days.includes(d.toDateString()))s++;
-    else if(i>0)break;
-  }
+  for(let i=0;i<90;i++){const d=new Date(cur);d.setDate(d.getDate()-i);if(days.includes(d.toDateString()))s++;else if(i>0)break;}
   return s;
 }
 
 function renderGraph(){
   const grid=document.getElementById('graphGrid');
-  const today=new Date();
-  const days=[];
+  const today=new Date();const days=[];
   for(let i=29;i>=0;i--){const d=new Date(today);d.setDate(d.getDate()-i);days.push(d.toDateString())}
-  const map={};
-  commits.forEach(c=>{const ds=new Date(c.date).toDateString();map[ds]=(map[ds]||0)+1});
+  const map={};commits.forEach(c=>{const ds=new Date(c.date).toDateString();map[ds]=(map[ds]||0)+1});
   grid.innerHTML=days.map(d=>{
-    const n=map[d]||0;
-    const isToday=d===today.toDateString();
-    let cls='gcell';
-    if(isToday)cls+=' today';
-    else if(n>0)cls+=' has';
-    const label=new Date(d).toLocaleDateString('en-IN',{month:'short',day:'numeric'});
-    return`<div class="${cls}" title="${label}: ${n} commit${n!==1?'s':''}"></div>`;
+    const n=map[d]||0,isT=d===today.toDateString();
+    return`<div class="gcell${isT?' today':n>0?' has':''}" title="${new Date(d).toLocaleDateString('en-IN',{month:'short',day:'numeric'})}: ${n}"></div>`;
   }).join('');
 }
 
@@ -612,8 +432,7 @@ function exportNotes(){
   if(!commits.length){alert('No love notes yet!');return}
   let md='# 💌 Love Commits\n\n*A repository of daily love notes, written just for you.*\n\n---\n\n';
   commits.forEach(c=>{
-    md+=`## ${c.mood} ${c.dateStr} · \`${c.id}\`\n`;
-    md+=`**${c.tag}**: ${c.msg}\n\n`;
+    md+=`## ${c.mood} ${c.dateStr} · \`${c.id}\`\n**${c.tag}**: ${c.msg}\n\n`;
     if(c.note)md+=`> ${c.note}\n\n`;
     md+='---\n\n';
   });
